@@ -1,4 +1,6 @@
-  connection {
+resource "null_resource" "config_inventory_file" {
+  
+connection {
     type = "ssh"
     user = "${var.vm_os_user}"
     password =  "${var.vm_os_password}"
