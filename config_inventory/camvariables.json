@@ -1,53 +1,308 @@
 {
-  "input_datatypes": [ ],
-  "input_namespaces": [ ],
+  "input_datatypes": [],
+  "input_namespaces": [],
   "output_namespace": "",
-  "input_groups": [  {
-    "name": "vra7_deployment_vra_catalog",
-    "label": "vra7_deployment Vra Catalog"
-  } ],
-  "output_groups": [ ],
+  "input_groups": [],
+  "output_groups": [],
   "template_input_params": [
     {
-      "name": "single_vmware_node_timeout",
-      "label": "Single VMware Node Timeout",
-      "description": "Time to wait (in minutes) for a vRA deployment to complete successfully",
+      "name": "bastion_host",
       "type": "string",
-      "default": "",
-      "validation": "",
-      "group_name": "",
-      "required": true,
-      "secured": false,
       "hidden": false,
+      "description": "Bastion host for ssh proxy",
+      "default": "",
+      "label": "Bastion host",
+      "secured": false,
+      "required": false,
       "immutable": false,
-      "immutable_after_create": false
+      "regexdesc": ""
     },
     {
-      "name": "vSphere__vCenter__Machine_1_user",
-      "label": "vSphere vCenter Machine 1 User",
-      "description": "Host username",
+      "name": "bastion_port",
       "type": "string",
-      "default": "",
-      "validation": "",
-      "group_name": "vra7_deployment_vra_catalog",
-      "required": true,
-      "secured": false,
       "hidden": false,
+      "description": "Bastion port for ssh proxy",
+      "default": "",
+      "label": "Bastion port",
+      "secured": false,
+      "required": false,
       "immutable": false,
-      "immutable_after_create": false
+      "regexdesc": ""
     },
     {
-      "name": "vSphere__vCenter__Machine_1_password",
-      "label": "vSphere vCenter Machine 1 Password",
-      "description": "Host password",
+      "name": "bastion_user",
       "type": "string",
+      "hidden": false,
+      "description": "Bastion user for ssh proxy",
       "default": "",
-      "validation": "",
-      "group_name": "vra7_deployment_vra_catalog",
+      "label": "Bastion user",
+      "secured": false,
+      "required": false,
+      "immutable": false,
+      "regexdesc": ""
+    },
+    {
+      "name": "bastion_private_key",
+      "type": "string",
+      "hidden": false,
+      "description": "Bastion private key for ssh proxy",
+      "default": "",
+      "label": "Bastion private key",
+      "secured": false,
+      "required": false,
+      "immutable": false,
+      "regexdesc": ""
+    },
+    {
+      "name": "bastion_password",
+      "type": "string",
+      "hidden": false,
+      "description": "Bastion user password for ssh proxy",
+      "default": "",
+      "label": "Bastion user password",
+      "secured": false,
+      "required": false,
+      "immutable": false,
+      "regexdesc": ""
+    },
+    {
+      "name": "bastion_host_key",
+      "type": "string",
+      "hidden": false,
+      "description": "Bastion host public key for ssh proxy",
+      "default": "",
+      "label": "Bastion host key",
+      "secured": false,
+      "required": false,
+      "immutable": false,
+      "regexdesc": ""
+    },
+    {
+      "name": "enable_lb",
+      "description": "Enable OpenShift Load Balancer Node",
+      "type": "string",
+      "required": true,
+      "secured": false,
+      "label": "Enable OpenShift Load Balancer Node",
+      "hidden": false,
+      "immutable": false,
+      "options": [
+        {
+          "value": "true",
+          "label": "true"
+        },
+        {
+          "value": "false",
+          "label": "false",
+          "default": true
+        }
+      ],
+      "group_name": "openshift_lb_node_on_vmware",
+      "default": "false"
+    },
+    {
+      "name": "vm_domain_name",
+      "default": "prova",
+      "description": "Virtual machine domain name.",
+      "type": "string",
+      "required": true,
+      "secured": false,
+      "label": "Virtual Machine Domain Name",
+      "hidden": false,
+      "immutable": false,
+      "group_name": "vsphere_managed_inventory_definition",
+      "regexdesc": ""
+    },
+    {
+      "name": "vm_os_user",
+      "description": "The user name to connect to the virtual machine.",
+      "default": "sss",
+      "type": "string",
+      "required": true,
+      "secured": false,
+      "label": "Virtual Machine Template User Name",
+      "hidden": false,
+      "immutable": false,
+      "group_name": "vsphere_managed_inventory_definition",
+      "regexdesc": ""
+    },
+    {
+      "name": "vm_os_password",
+      "description": "The user password to connect to the virtual machine.",
+      "default": "aaa",
+      "type": "string",
+      "required": false,
+      "secured": true,
+      "label": "Virtual Machine Template User Password",
+      "hidden": false,
+      "immutable": false,
+      "group_name": "vsphere_managed_inventory_definition",
+      "regexdesc": ""
+    },
+    {
+      "name": "private_key",
+      "description": "The user private key to connect to the virtual machine.",
+      "default": "ddddd",
+      "type": "string",
+      "required": false,
+      "secured": true,
+      "label": "Virtual Machine Template User Private Key (base64 encoded)",
+      "hidden": false,
+      "immutable": false,
+      "group_name": "vsphere_managed_inventory_definition",
+      "regexdesc": ""
+    },
+    {
+      "name": "random",
+      "description": "Random string",
+      "default": "dfkldf",
+      "type": "string",
+      "required": false,
+      "secured": true,
+      "label": "Random string",
+      "hidden": false,
+      "immutable": false,
+      "group_name": "vsphere_managed_inventory_definition",
+      "regexdesc": ""
+    },
+    {
+      "name": "compute_node_enable_glusterfs",
+      "description": "Indicates wether GlusterFS storage should be enabled on compute nodes",
+      "type": "string",
+      "required": true,
+      "secured": false,
+      "label": "Enable GlusterFS (need at least 3 compute nodes)",
+      "hidden": false,
+      "options": [
+        {
+          "value": "true",
+          "label": "true"
+        },
+        {
+          "value": "false",
+          "label": "false"
+        }
+      ],
+      "immutable": false,
+      "group_name": "openshift_compute_node_on_vmware"
+    },
+    {
+      "name": "compute_node_hostname",
+      "description": "Compute Node Hostname",
+      "default": "0.0.0.0",
+      "type": "string",
+      "required": true,
+      "secured": false,
+      "label": "Compute Node Hostname",
+      "hidden": false,
+      "immutable": false,
+      "group_name": "openshift_compute_node_on_vmware",
+      "regexdesc": ""
+    },
+    {
+      "name": "infra_node_hostname",
+      "description": "Infra Node Hostname",
+      "default": "0.0.0.0",
+      "type": "string",
+      "required": true,
+      "secured": false,
+      "label": "Infra Node Hostname",
+      "hidden": false,
+      "immutable": false,
+      "group_name": "openshift_compute_node_on_vmware",
+      "regexdesc": ""
+    },
+    {
+      "name": "infra_node_ip",
+      "description": "Infra Node IP",
+      "default": "0.0.0.0",
+      "type": "string",
+      "required": true,
+      "secured": false,
+      "label": "Infra Node IP",
+      "hidden": false,
+      "immutable": false,
+      "group_name": "openshift_compute_node_on_vmware",
+      "regexdesc": ""
+    },
+    {
+      "name": "master_node_hostname",
+      "description": "Master Node Hostname",
+      "default": "0.0.0.0",
+      "type": "string",
+      "required": true,
+      "secured": false,
+      "label": "Master Node Hostname",
+      "hidden": false,
+      "immutable": false,
+      "group_name": "openshift_compute_node_on_vmware",
+      "regexdesc": ""
+    },
+    {
+      "name": "master_node_ip",
+      "description": "Infra Node IP",
+      "default": "0.0.0.0",
+      "type": "string",
+      "required": true,
+      "secured": false,
+      "label": "Master Node IP",
+      "hidden": false,
+      "immutable": false,
+      "group_name": "openshift_compute_node_on_vmware",
+      "regexdesc": ""
+    },
+    {
+      "name": "lb_node_hostname",
+      "description": "LB Node Hostname",
+      "default": "0.0.0.0",
+      "type": "string",
+      "required": true,
+      "secured": false,
+      "label": "LB Node Hostname",
+      "hidden": false,
+      "immutable": false,
+      "group_name": "openshift_compute_node_on_vmware",
+      "regexdesc": ""
+    },
+    {
+      "name": "etcd_node_hostname",
+      "description": "etcd Node Hostname",
+      "default": "0.0.0.0",
+      "type": "string",
+      "required": true,
+      "secured": false,
+      "label": "etcd Node Hostname",
+      "hidden": false,
+      "immutable": false,
+      "group_name": "openshift_compute_node_on_vmware",
+      "regexdesc": ""
+    },
+    {
+      "name": "rh_user",
+      "description": "Red Hat Subscription Manager Account Username",
+      "default": "fff",
+      "type": "string",
+      "required": true,
+      "secured": false,
+      "label": "Red Hat Subscription Manager Account Username",
+      "hidden": false,
+      "immutable": false,
+      "group_name": "rh_ocp",
+      "regexdesc": ""
+    },
+    {
+      "name": "rh_password",
+      "description": "Red Hat Subscription Manager Account Password",
+      "default": "sss",
+      "type": "string",
       "required": true,
       "secured": true,
+      "label": "Red Hat Subscription Manager Account Password",
       "hidden": false,
       "immutable": false,
-      "immutable_after_create": false
+      "group_name": "rh_ocp",
+      "regexdesc": ""
     }
-  ]
+  ],
+  "template_output_params": []
+}
