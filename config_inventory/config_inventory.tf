@@ -32,7 +32,6 @@ connection {
 }
 
 resource "null_resource" "finish_config_inventory" {
-  depends_on = ["null_resource.config_inventory_file"]
   provisioner "local-exec" {
     command = "echo 'Configuring inventory file finished successfully.'" #${var.vm_ipv4_address_list}.'"
   }
